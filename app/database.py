@@ -6,7 +6,7 @@ import os
 # El nombre de la base de datos al final debe ser "inventario" (o el que hayas creado)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "mysql+pymysql://root:tu_contraseña@localhost:3306/inventario"
+    "mysql+pymysql://root:pass@127.0.0.1:3306/inventario_db"
 )
 
 engine = create_engine(DATABASE_URL)

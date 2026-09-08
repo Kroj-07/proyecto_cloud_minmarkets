@@ -1,11 +1,16 @@
-# scripts/seed_fake_data.py
+import sys
+import os
 from faker import Faker
 import random
+
+# Esto fuerza a Python a encontrar la carpeta 'app' 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from app.database import SessionLocal, engine, Base
-from .app.models import Producto, MovimientoInventario
+from app.models import Producto, MovimientoInventario
 
 Base.metadata.create_all(bind=engine)
-fake = Faker("es_PE")
+fake = Faker("es_ES")
 db = SessionLocal()
 
 # Crea ~200 productos
@@ -22,7 +27,7 @@ for _ in range(200):
     productos.append(p)
 db.commit()
 
-# Genera 20,000+ movimientos (aquí sí llegamos al mínimo exigido)
+# Genera 20,000+ movimientos
 movimientos = []
 for _ in range(20000):
     movimientos.append(MovimientoInventario(
@@ -32,4 +37,5 @@ for _ in range(20000):
     ))
 db.bulk_save_objects(movimientos)
 db.commit()
+
 print("Carga completa.")
